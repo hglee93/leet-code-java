@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class Solution {
     // you need treat n as an unsigned value
     public int reverseBits(int n) {
@@ -31,6 +33,61 @@ public class Solution {
         }
 
         return null;
+    }
+
+    class Pair{
+        public int x;
+        public int y;
+        public Pair(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
+
+    // UP, DOWN, LEFT, RIGHT
+    public int[] dx = {-1, 1, 0, 0};
+    public int[] dy = {0, 0, -1, 1};
+
+    public int numIslands(char[][] grid) {
+
+        if(grid.length == 0) { return 0; }
+
+        int cnt = 0;
+        int xlen = grid.length;
+        int ylen = grid[0].length;
+
+        boolean[][] visited = new boolean[xlen][ylen];
+
+        for(int i = 0; i < xlen; i++) {
+            for(int j = 0; j < ylen; j++) {
+                if(grid[i][j] == '0' || visited[i][j] == true) { continue; }
+
+                // BFS 작업 시작하기 전 cnt 증가
+                // grid[i][j] == 1 일때 BFS 수행하면서 marking
+                cnt++;
+                Queue<Pair> queue = new LinkedList<Pair>();
+                queue.add(new Pair(i, j));
+                visited[i][j] = true;
+
+                while(!queue.isEmpty()) {
+
+                    Pair p = queue.peek();
+                    queue.remove();
+
+                    for(int d = 0; d < 4; d++) {
+                        int nextX = p.x + dx[d];
+                        int nextY = p.y + dy[d];
+                        if(nextX >= 0 && nextX < xlen && nextY >= 0 && nextY < ylen
+                                && visited[nextX][nextY] == false && grid[nextX][nextY] == '1') {
+                            queue.add(new Pair(nextX, nextY));
+                            visited[nextX][nextY] = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return cnt;
     }
 
     public class ListNode {
