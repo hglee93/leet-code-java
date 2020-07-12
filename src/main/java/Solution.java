@@ -120,7 +120,7 @@ public class Solution {
 
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
 
-        ListNode cursor = null;
+        /*ListNode cursor = null;
         ListNode prevCursor = null;
         ListNode head = null;
 
@@ -189,6 +189,33 @@ public class Solution {
             if(prevCursor != null) { prevCursor.next = cursor; }
         }
 
-        return head;
+        return head;*/
+
+        // dummyHead Node를 활용하면 코드가 간결해진다.
+        // List의 노드 삽입 시 cursor.next에 노드를 만들어주는게 코드가 간결해지는 듯~
+        ListNode dummyHead = new ListNode(0);
+        ListNode cursor = dummyHead;
+
+        int carry = 0;
+
+        while(l1 != null || l2 != null) {
+
+            int x = (l1 != null ? l1.val : 0);
+            int y = (l2 != null ? l2.val : 0);
+
+            int sum = x + y + carry;
+            carry = sum / 10;
+            cursor.next = new ListNode(sum % 10);
+            cursor = cursor.next;
+
+            if(l1 != null) { l1 = l1.next; }
+            if(l2 != null) { l2 = l2.next; }
+        }
+
+        if(carry == 1) {
+            cursor.next = new ListNode(1);
+        }
+
+        return dummyHead.next;
     }
 }
