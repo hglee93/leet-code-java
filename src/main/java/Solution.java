@@ -21,7 +21,7 @@ public class Solution {
 
     public int[] twoSum(int[] nums, int target) {
 
-        for(int i = 0; i < nums.length; i++) {
+        /*for(int i = 0; i < nums.length; i++) {
             for(int j = i + 1; j < nums.length; j++) {
                 if(target == (nums[i] + nums[j])) {
                     int[] answer = new int[2];
@@ -29,6 +29,26 @@ public class Solution {
                     answer[1] = j;
                     return answer;
                 }
+            }
+        }
+
+        return null;*/
+
+        // 해시테이블 이용
+        // look-up 속도가 O(n) -> O(1) 으로 줄어든다.
+        HashMap<Integer, Integer> hashTable = new HashMap<Integer, Integer>();
+
+        for(int i = 0; i < nums.length; i++) {
+            hashTable.put(nums[i], i);
+        }
+
+        for(int i = 0; i < nums.length; i++) {
+            int findValue = target - nums[i];
+            if(hashTable.containsKey(findValue) == true && hashTable.get(findValue) != i) {
+                int[] answer = new int[2];
+                answer[0] = i;
+                answer[1] = hashTable.get(findValue);
+                return answer;
             }
         }
 
