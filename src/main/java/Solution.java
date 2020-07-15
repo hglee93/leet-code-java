@@ -244,4 +244,32 @@ public class Solution {
     public boolean isSameTree(TreeNode p, TreeNode q) {
         return checkSameTree(p, q);
     }
+
+    public String reverseWords(String s) {
+
+        if(s.equals("")) { return ""; }
+
+        Stack st = new Stack();
+
+        String[] words = s.split(" ");
+        for(String word : words) {
+            st.push(word);
+        }
+
+        String answer = "";
+
+        while(!st.isEmpty()) {
+            String word = (String) st.pop();
+            if(word.equals("")) { continue; }
+            else {
+                answer += word + " ";
+            }
+        }
+
+        if(answer.length() >= 1) {
+            answer = answer.substring(0, answer.length() - 1);
+        }
+
+        return answer;
+    }
 }
