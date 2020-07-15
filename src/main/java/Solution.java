@@ -272,4 +272,53 @@ public class Solution {
 
         return answer;
     }
+
+    public boolean isDigitsLog(String log) {
+
+        String[] words = log.split(" ");
+
+        if(words[1].charAt(0) >= '0' && words[1].charAt(0) <= '9') {
+            return true;
+        }
+
+        return false;
+    }
+    public String[] reorderLogFiles(String[] logs) {
+
+        List<String> letterLog = new ArrayList<String>();
+
+        List<String> digitsLog = new ArrayList<String>();
+
+        for(int i = 0; i < logs.length; i++) {
+            if(isDigitsLog(logs[i]) == true) { digitsLog.add(logs[i]); }
+            else { letterLog.add(logs[i]); }
+        }
+
+        Collections.sort(letterLog, new Comparator<String>() {
+            public int compare(String s1, String s2) {
+                int left1 = 0, left2 = 0;
+                while(left1 <= s1.length() - 1 && s1.charAt(left1) != ' ') { left1++; }
+                while(left2 <= s2.length() - 1 && s2.charAt(left2) != ' ') { left2++; }
+
+                if(s1.substring(left1).compareTo(s2.substring(left2)) == 0) {
+                    return s1.substring(0, left1).compareTo(s2.substring(0, left2));
+                }
+
+                return s1.substring(left1).compareTo(s2.substring(left2));
+            }
+        });
+
+        String[] reorderLog = new String[logs.length];
+        int index = 0;
+
+        for(String log : letterLog) {
+            reorderLog[index++] = log;
+        }
+
+        for(String log : digitsLog) {
+            reorderLog[index++] = log;
+        }
+
+        return reorderLog;
+    }
 }
