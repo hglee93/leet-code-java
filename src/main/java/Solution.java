@@ -1,4 +1,4 @@
-import java.util.*;
+﻿import java.util.*;
 
 public class Solution {
     // you need treat n as an unsigned value
@@ -320,5 +320,63 @@ public class Solution {
         }
 
         return reorderLog;
+    }
+
+public boolean isPalindrome(String s) {
+        int left = 0;
+        int right = s.length() - 1;
+        
+        while(left <= right) {
+            if(s.charAt(left) == s.charAt(right)) {
+                left++;
+                right--;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public String longestPalindrome(String s) {
+        
+        int windowSize = s.length();
+        
+        while(windowSize > 0) {
+            for(int i = 0; i <= s.length() - windowSize; i++) {
+                String sub = s.substring(i, i + windowSize);
+                if(isPalindrome(sub) == true) {
+                    return sub;
+                }
+            }
+            --windowSize;
+        }
+        
+        return "";
+    }
+public String convert(String s, int numRows) {
+        
+        int index = 0;
+        int change = 1;
+        
+        StringBuilder[] sbArray = new StringBuilder[numRows];
+        for(int i = 0; i < numRows; i++) {
+            sbArray[i] = new StringBuilder();
+        }
+        
+        for(int i = 0; i < s.length(); i++){
+            
+            if(index == numRows - 1) {
+                change = -1;
+            } else if(index == 0) {
+                change = 1;
+            }
+            
+            sbArray[index].append(s.charAt(i));
+            index = index + change;
+            if(index < 0) { index = 0; }
+            
+        }
+        
+        return String.join("", sbArray);
     }
 }
