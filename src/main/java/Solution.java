@@ -353,7 +353,8 @@ public boolean isPalindrome(String s) {
         
         return "";
     }
-public String convert(String s, int numRows) {
+
+    public String convert(String s, int numRows) {
         
         int index = 0;
         int change = 1;
@@ -378,5 +379,54 @@ public String convert(String s, int numRows) {
         }
         
         return String.join("", sbArray);
+    }
+
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+
+        ListNode head = new ListNode(0);
+        ListNode answer = head;
+
+        while(l1 != null && l2 != null) {
+            // 값이 같을 때
+            if(l1.val == l2.val) {
+
+                answer.next = new ListNode(l1.val);
+                l1 = l1.next;
+                answer = answer.next;
+
+                answer.next = new ListNode(l2.val);
+                l2 = l2.next;
+                answer = answer.next;
+            }
+            // l1.val < l2.val
+            else if(l1.val < l2.val) {
+                answer.next = new ListNode(l1.val);
+                l1 = l1.next;
+                answer = answer.next;
+            }
+            // l2.val < l1.val
+            else {
+                answer.next = new ListNode(l2.val);
+                l2 = l2.next;
+                answer = answer.next;
+            }
+        }
+
+        if(l1 == null) {
+            while(l2 != null) {
+                answer.next = new ListNode(l2.val);
+                l2 = l2.next;
+                answer = answer.next;
+            }
+        }
+        else if(l2 == null) {
+            while(l1 != null) {
+                answer.next = new ListNode(l1.val);
+                l1 = l1.next;
+                answer = answer.next;
+            }
+        }
+
+        return head.next;
     }
 }
