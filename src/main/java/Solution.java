@@ -429,4 +429,65 @@ public boolean isPalindrome(String s) {
 
         return head.next;
     }
+
+    public boolean isPossible(int number, int[][] conditions) {
+
+        String numStr = String.valueOf(number);
+
+        for(int i = 0; i < conditions.length; i++) {
+
+            String targetStr = String.valueOf(conditions[i][0]);
+            int strikeTargetCount = conditions[i][1];
+            int ballTargetCount = conditions[i][2];
+
+            int strikeCount = 0;
+            int ballCount = 0;
+
+            if(numStr.charAt(0) == targetStr.charAt(0)) { strikeCount++; }
+            else if(numStr.charAt(0) == targetStr.charAt(1)
+                    || numStr.charAt(0) == targetStr.charAt(2)) { ballCount++; }
+
+            if(numStr.charAt(1) == targetStr.charAt(1)) { strikeCount++; }
+            else if(numStr.charAt(1) == targetStr.charAt(0)
+                    || numStr.charAt(1) == targetStr.charAt(2)) { ballCount++; }
+
+            if(numStr.charAt(2) == targetStr.charAt(2)) { strikeCount++; }
+            else if(numStr.charAt(2) == targetStr.charAt(1)
+                    || numStr.charAt(2) == targetStr.charAt(0)) { ballCount++; }
+
+            if(ballCount != ballTargetCount
+                    || strikeCount != strikeTargetCount) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public boolean isTarget(int num) {
+        int first = num % 10;
+        num = num / 10;
+        int second = num % 10;
+        num = num / 10;
+        int third = num % 10;
+
+        if(first == 0 || second == 0 || third == 0) { return false; }
+        if(first == second || first == third || second == third) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public int solution(int[][] baseball) {
+
+        int answer = 0;
+
+        for(int i = 123; i < 1000; i++) {
+            if(isTarget(i) == false) { continue; }
+            if(isPossible(i, baseball) == true) { answer++; }
+        }
+
+        return answer;
+    }
 }
