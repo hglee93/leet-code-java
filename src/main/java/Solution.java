@@ -629,4 +629,16 @@ public boolean isPalindrome(String s) {
 
         return answer;
     }
+
+    public int[] building(int[] heights) {
+        int[] answer = new int[heights.length];
+        for(int i = 0; i < heights.length; i++) {
+            int j = i;
+            for(; j >= 0; j--) {
+                if(heights[j] > heights[i]) { break; }
+            }
+            answer[i] = j + 1;
+        }
+        return answer;
+    }
 }
