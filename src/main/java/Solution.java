@@ -582,4 +582,51 @@ public boolean isPalindrome(String s) {
         }
         return answer;
     }
+
+    class Job{
+        public int location;
+        public int priority;
+        public Job(int location, int priority) {
+            this.location = location;
+            this.priority = priority;
+        }
+    }
+
+    public int printer(int[] priorities, int location) {
+
+        int answer = 0;
+
+        List<Job> queue = new LinkedList<Job>();
+        for(int i = 0; i < priorities.length; i++) {
+            queue.add(new Job(i, priorities[i]));
+        }
+
+        while(true) {
+            Job job = queue.get(0);
+            queue.remove(0);
+
+
+
+            int i = 0;
+            int qSize = queue.size();
+            for(; i < qSize; i++) {
+                if(queue.get(i).priority > job.priority) {
+                    queue.add(job);
+                    break;
+                }
+            }
+
+            // 우선순위가 높은 Job이 없는 경우
+            if(i == qSize) {
+                answer++;
+            } else {
+                continue;
+            }
+
+            // 원하는 Job을 찾은 경우
+            if(job.location == location) { break; }
+        }
+
+        return answer;
+    }
 }
