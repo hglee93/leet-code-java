@@ -490,4 +490,83 @@ public boolean isPalindrome(String s) {
 
         return answer;
     }
+
+    public String addBinary(String a, String b) {
+        char carry = '0';
+        int aIdx = a.length() - 1;
+        int bIdx = b.length() - 1;
+
+        StringBuilder sb = new StringBuilder();
+
+        while(!(aIdx == -1 || bIdx == -1)) {
+            // 덧셈
+            if(carry == '1' && a.charAt(aIdx) == '1' && b.charAt(bIdx) == '1') {
+                sb.append('1');
+                carry = '1';
+            }
+            else if(carry == '1' && (a.charAt(aIdx) == '1' || b.charAt(bIdx) == '1')) {
+                sb.append('0');
+                carry = '1';
+            }
+            else if(carry == '1' && a.charAt(aIdx) == '0' && b.charAt(bIdx) == '0') {
+                sb.append('1');
+                carry = '0';
+            }
+            else if(carry == '0' && a.charAt(aIdx) == '1' && b.charAt(bIdx) == '1') {
+                sb.append('0');
+                carry = '1';
+            }
+            else if(carry == '0' && (a.charAt(aIdx) == '1' || b.charAt(bIdx) == '1')) {
+                sb.append('1');
+                carry = '0';
+            }
+            else if(carry == '0' && a.charAt(aIdx) == '0' && b.charAt(bIdx) == '0') {
+                sb.append('0');
+                carry = '0';
+            }
+            --aIdx;
+            --bIdx;
+        }
+
+        if(a.length() < b.length()) {
+            for(int i = bIdx; i >= 0; i--) {
+                if(carry == '1' && b.charAt(i) == '1') {
+                    sb.append('0');
+                    carry = '1';
+                }
+                else if((carry == '1' && b.charAt(i) == '0')
+                        || (carry == '0' && b.charAt(i) == '1')) {
+                    sb.append('1');
+                    carry = '0';
+                }
+                else if(carry == '0' && b.charAt(i) == '0') {
+                    sb.append('0');
+                    carry = '0';
+                }
+            }
+        }
+        else if(a.length() > b.length()) {
+            for(int i = aIdx; i >= 0; i--) {
+                if(carry == '1' && a.charAt(i) == '1') {
+                    sb.append('0');
+                    carry = '1';
+                }
+                else if((carry == '1' && a.charAt(i) == '0')
+                        || (carry == '0' && a.charAt(i) == '1')) {
+                    sb.append('1');
+                    carry = '0';
+                }
+                else if(carry == '0' && a.charAt(i) == '0') {
+                    sb.append('0');
+                    carry = '0';
+                }
+            }
+        }
+
+        if(carry != '0') {
+            sb.append(carry);
+        }
+
+        return sb.reverse().toString();
+    }
 }
