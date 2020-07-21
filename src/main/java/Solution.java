@@ -657,4 +657,52 @@ public boolean isPalindrome(String s) {
 
         return sentinel.next;
     }
+
+    public boolean dfs(String findStr, String curStr, int x, int y,
+                       char[][] board, boolean[][] visited) {
+
+        // 종료 조건
+        if(findStr.length() == curStr.length()) {
+            if(findStr.equals(curStr) == true) { return true; }
+            return false;
+        }
+
+        // 각 단계마다 같은 문자인지 체크 후 가지치기
+        if(curStr.charAt(curStr.length() - 1) != findStr.charAt(curStr.length() - 1)) {
+            return false;
+        }
+
+        for(int d = 0; d < 4; d++) {
+            int nextX = x + dx[d];
+            int nextY = y + dy[d];
+            if(nextX >= 0 && nextX < board.length
+                    && nextY >= 0 && nextY < board[0].length && visited[nextX][nextY] == false) {
+                visited[nextX][nextY] = true;
+                if(dfs(findStr, curStr + board[nextX][nextY]
+                        , nextX, nextY, board, visited) == true) {
+                    return true;
+                }
+                visited[nextX][nextY] = false;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean exist(char[][] board, String word) {
+
+        for(int i = 0; i < board.length; i++) {
+            for(int j = 0; j < board[0].length; j++) {
+                // board[i][j]가 word의 첫 문자일 경우만 탐색 시작
+                boolean[][] visited = new boolean[board.length][board[0].length];
+                visited[i][j] = true;
+                if(dfs(word, "" + board[i][j], i, j, board, visited) == true) {
+                    return true;
+                }
+                visited[i][j] = false;
+            }
+        }
+
+        return false;
+    }
 }
