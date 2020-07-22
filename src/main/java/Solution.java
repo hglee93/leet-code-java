@@ -705,4 +705,39 @@ public boolean isPalindrome(String s) {
 
         return false;
     }
+
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+
+        Queue<TreeNode> leverOrderQueue= new LinkedList<TreeNode>();
+        leverOrderQueue.add(root);
+
+        boolean leftToRight = true;
+
+        List<List<Integer>> answer = new ArrayList<List<Integer>>();
+        if(root == null) { return answer; }
+
+        while(!leverOrderQueue.isEmpty()) {
+
+            int qSize = leverOrderQueue.size();
+            List<Integer> list = new ArrayList<Integer>();
+
+            for(int i = 0; i < qSize; i++) {
+                TreeNode node = leverOrderQueue.poll();
+                list.add(node.val);
+                if(node.left != null) { leverOrderQueue.add(node.left); }
+                if(node.right != null) { leverOrderQueue.add(node.right); }
+            }
+
+            if(leftToRight == true) {
+                answer.add(list);
+                leftToRight = false;
+            } else {
+                Collections.reverse(list);
+                answer.add(list);
+                leftToRight = true;
+            }
+        }
+
+        return answer;
+    }
 }
