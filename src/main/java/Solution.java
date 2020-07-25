@@ -803,4 +803,46 @@ public boolean isPalindrome(String s) {
 
         return h - 1;
     }
+
+    public int[] doublePriorityQueue(String[] operations) {
+
+        int[] answer = new int[2];
+
+        PriorityQueue<Integer> minQueue = new PriorityQueue<Integer>();
+        PriorityQueue<Integer> maxQueue = new PriorityQueue<Integer>(new Comparator<Integer>() {
+            public int compare(Integer num1, Integer num2) {
+                return Integer.compare(num2, num1);
+            }
+        });
+
+        for(int i = 0; i < operations.length; i++) {
+
+            String[] commands = operations[i].split(" ");
+
+            if(commands[0].equals("I")) {
+                minQueue.add(Integer.parseInt(commands[1]));
+                maxQueue.add(Integer.parseInt(commands[1]));
+            } else if(commands[0].equals("D")) {
+                if(maxQueue.isEmpty()) { continue; }
+                if(commands[1].equals("1") == true) {
+                    Integer max = maxQueue.poll();
+                    minQueue.remove(max);
+                } else {
+                    Integer min = minQueue.poll();
+                    maxQueue.remove(min);
+                }
+            }
+        }
+
+        if(maxQueue.size() >= 1)
+        {
+            answer[0] = maxQueue.peek();
+            answer[1] = minQueue.peek();
+        } else {
+            answer[0] = 0;
+            answer[1] = 0;
+        }
+
+        return answer;
+    }
 }
