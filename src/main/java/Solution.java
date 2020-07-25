@@ -845,4 +845,23 @@ public boolean isPalindrome(String s) {
 
         return answer;
     }
+
+    public int findMin(int[] nums) {
+        /*
+        int min = 2147483647;
+        for(int i = 0; i < nums.length; i++) {
+            if(min > nums[i]) {
+                min = nums[i];
+            }
+        }
+        return min;*/
+
+        for(int i = 1; i < nums.length; i++) {
+            if(nums[i] - nums[i - 1] < 0) {
+                return nums[i];
+            }
+        }
+
+        return nums[0];
+    }
 }
