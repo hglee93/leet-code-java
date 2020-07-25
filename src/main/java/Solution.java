@@ -753,4 +753,36 @@ public boolean isPalindrome(String s) {
 
         return answer;
     }
+
+    public String biggestNumber(int[] numbers) {
+
+        String answer = "";
+        List<Integer> list = new ArrayList<Integer>();
+
+        for(int number : numbers) {
+            list.add(number);
+        }
+
+        Collections.sort(list, new Comparator<Integer>() {
+            public int compare(Integer num1, Integer num2) {
+                String str1 = num1 + "" + num2;
+                String str2 = num2 + "" + num1;
+                return Integer.compare(Integer.parseInt(str2), Integer.parseInt(str1));
+            }
+        });
+
+        StringBuilder sb = new StringBuilder();
+
+        for(Integer ele : list) {
+            sb.append(ele);
+        }
+
+        answer = sb.toString();
+
+        if(answer.charAt(0) == '0') {
+            answer = "0";
+        }
+
+        return answer;
+    }
 }
