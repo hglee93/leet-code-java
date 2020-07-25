@@ -785,4 +785,22 @@ public boolean isPalindrome(String s) {
 
         return answer;
     }
+
+    public int HIndex(int[] citations) {
+
+        int answer = 0;
+        Arrays.sort(citations);
+
+        int h = 0;
+        int index = 0;
+
+        for(; h <= citations.length; h++) {
+            while(index < citations.length && citations[index] < h) {
+                index++;
+            }
+            if(citations.length - index < h) { break; }
+        }
+
+        return h - 1;
+    }
 }
