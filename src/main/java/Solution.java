@@ -864,4 +864,10 @@ public boolean isPalindrome(String s) {
 
         return nums[0];
     }
+
+    public int addDigits(int num) {
+        if(num < 10) { return num; }
+        num = num % 9;
+        return num == 0 ? 9 : num;
+    }
 }
