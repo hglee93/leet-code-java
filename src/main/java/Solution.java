@@ -870,4 +870,56 @@ public boolean isPalindrome(String s) {
         num = num % 9;
         return num == 0 ? 9 : num;
     }
+
+    class allPath {
+
+        public List<List<Integer>> answer;
+
+        public void function(int node, int target, List<Integer> path, boolean[] visited, int[][] graph) {
+            // 종료 조건
+            if(path.get(path.size() - 1) == target) {
+                List<Integer> findPath = new ArrayList<Integer>();
+                for(Integer n : path) { findPath.add(n); }
+                answer.add(findPath);
+                return;
+            }
+
+            for(int i = 0; i < graph[node].length; i++) {
+                int nextNode = graph[node][i];
+                visited[nextNode] = true;
+                path.add(nextNode);
+
+                function(nextNode, graph.length - 1, path, visited, graph);
+
+                visited[nextNode] = false;
+                path.remove(path.size() - 1);
+            }
+        }
+
+        public List<List<Integer>> allPathsSourceTarget(int[][] graph) {
+
+            answer = new ArrayList<List<Integer>>();
+
+            boolean[] visited = new boolean[graph.length];
+            visited[0] = true;
+
+            List<Integer> path = new ArrayList<Integer>();
+            path.add(0);
+
+            for(int i = 0; i < graph[0].length; i++) {
+
+                int nextNode = graph[0][i];
+                visited[nextNode] = true;
+                path.add(nextNode);
+
+                function(nextNode, graph.length - 1, path, visited, graph);
+
+                visited[nextNode] = false;
+                path.remove(path.size() - 1);
+
+            }
+
+            return answer;
+        }
+    }
 }
