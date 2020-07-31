@@ -922,4 +922,19 @@ public boolean isPalindrome(String s) {
             return answer;
         }
     }
+
+    public int dfs(int curStep, int n, int[] memo) {
+        if(curStep == n) { return 1; }
+        else if(curStep > n) { return 0; }
+        else if(memo[curStep] > 0) {
+            return memo[curStep];
+        }
+        memo[curStep] = dfs(curStep + 1, n, memo) + dfs(curStep + 2, n, memo);
+        return memo[curStep];
+    }
+
+    public int climbStairs(int n) {
+        int[] memo = new int[n + 1];
+        return dfs(0, n, memo);
+    }
 }
