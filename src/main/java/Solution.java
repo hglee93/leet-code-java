@@ -937,4 +937,33 @@ public boolean isPalindrome(String s) {
         int[] memo = new int[n + 1];
         return dfs(0, n, memo);
     }
+
+    class Logger {
+
+        private Map<String, Integer> timeMap;
+
+        /** Initialize your data structure here. */
+        public Logger() {
+            this.timeMap = new HashMap<String, Integer>();
+        }
+
+        /** Returns true if the message should be printed in the given timestamp, otherwise returns false.
+         If this method returns false, the message will not be printed.
+         The timestamp is in seconds granularity. */
+        public boolean shouldPrintMessage(int timestamp, String message) {
+            if(timeMap.containsKey(message) == false) {
+                timeMap.put(message, timestamp);
+                return true;
+            }
+            else {
+                int lastTime = timeMap.get(message);
+                if(timestamp - lastTime >= 10) {
+                    timeMap.put(message, timestamp);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+    }
 }
