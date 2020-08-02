@@ -966,4 +966,27 @@ public boolean isPalindrome(String s) {
             }
         }
     }
+
+    class MyHashSet {
+
+        private boolean[] entry;
+
+        /** Initialize your data structure here. */
+        public MyHashSet() {
+            entry = new boolean[1000001];
+        }
+
+        public void add(int key) {
+            entry[key] = true;
+        }
+
+        public void remove(int key) {
+            entry[key] = false;
+        }
+
+        /** Returns true if this set contains the specified element */
+        public boolean contains(int key) {
+            return entry[key];
+        }
+    }
 }
