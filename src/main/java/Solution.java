@@ -989,4 +989,63 @@ public boolean isPalindrome(String s) {
             return entry[key];
         }
     }
+
+    /**
+     * Definition for singly-linked list.
+     * public class ListNode {
+     *     int val;
+     *     ListNode next;
+     *     ListNode() {}
+     *     ListNode(int val) { this.val = val; }
+     *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+     * }
+     */
+    public void reorderList(ListNode head) {
+
+        ListNode list = head;
+
+        int length = 0;
+        // calculate length.
+        while(list != null) {  list = list.next; length++; }
+
+        if(length == 0 || length == 1 || length == 2) { return; }
+
+        list = head;
+        int stopIndex = (length % 2 == 0) ? length / 2 : length / 2 + 1;
+
+        ListNode halfList = null;
+
+        // slice half List
+        for(int i = 0; i < stopIndex; i++) {
+            if(i == stopIndex - 1) {
+                halfList = list.next;
+                list.next = null;
+            } else {
+                list = list.next;
+            }
+        }
+
+        // reverse half list
+        ListNode descendingList = null;
+        while(halfList != null) {
+            ListNode temp = halfList;
+            halfList = halfList.next;
+            temp.next = descendingList;
+            descendingList = temp;
+        }
+
+        list = head;
+        while(list != null && descendingList != null) {
+
+            ListNode temp = list.next;
+            ListNode rtemp = descendingList.next;
+
+            descendingList.next = list.next;
+            list.next = descendingList;
+
+            list = temp;
+            descendingList = rtemp;
+
+        }
+    }
 }
