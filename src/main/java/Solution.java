@@ -1048,4 +1048,24 @@ public boolean isPalindrome(String s) {
 
         }
     }
+
+    public int[] sortArrayByParity(int[] A) {
+
+        int[] rtnArray = new int[A.length];
+        int index = 0 ;
+
+        for(int i = 0; i < A.length; i++) {
+            if(A[i] % 2 == 0) {
+                rtnArray[index++] = A[i];
+            }
+        }
+
+        for(int i = 0; i < A.length; i++) {
+            if(A[i] % 2 == 1) {
+                rtnArray[index++] = A[i];
+            }
+        }
+
+        return rtnArray;
+    }
 }
