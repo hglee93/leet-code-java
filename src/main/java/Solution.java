@@ -1071,44 +1071,35 @@ public boolean isPalindrome(String s) {
 
     public int[][] merge(int[][] intervals) {
 
+        if(intervals.length == 0) { return intervals; }
+
         Arrays.sort(intervals, new Comparator<int[]>() {
             public int compare(int[] a, int[] b) {
                 return Integer.compare(a[0], b[0]);
             }
         });
 
-        if(intervals.length == 0) {
-            return new int[0][0];
-        }
+        List<int[]> list = new ArrayList<>();
 
-        List<List<Integer>> list = new ArrayList<List<Integer>>();
-
-        List<Integer> mergeInterval = new ArrayList<Integer>();
-        mergeInterval.add(intervals[0][0]);
-        mergeInterval.add(intervals[0][1]);
+        int[] mergeInterval = new int[2];
+        mergeInterval[0] = intervals[0][0];
+        mergeInterval[1] = intervals[0][1];
 
         for(int i = 0; i < intervals.length - 1; i++) {
-            if(mergeInterval.get(1) >= intervals[i + 1][0]) {
-                int end = Math.max(mergeInterval.get(1), intervals[i + 1][1]);
-                mergeInterval.set(1, end);
+            if(mergeInterval[1] >= intervals[i + 1][0]) {
+                int end = Math.max(mergeInterval[1], intervals[i + 1][1]);
+                mergeInterval[1] = end;
             }
             else {
                 list.add(mergeInterval);
-                mergeInterval = new ArrayList<Integer>();
-                mergeInterval.add(intervals[i + 1][0]);
-                mergeInterval.add(intervals[i + 1][1]);
+                mergeInterval = new int[2];
+                mergeInterval[0] = intervals[i + 1][0];
+                mergeInterval[1] = intervals[i + 1][1];
             }
         }
 
         list.add(mergeInterval);
 
-        int[][] answer = new int[list.size()][2];
-
-        for(int i = 0; i < list.size(); i++) {
-            answer[i][0] = list.get(i).get(0);
-            answer[i][1] = list.get(i).get(1);
-        }
-
-        return answer;
+        return list.toArray(new int[list.size()][]);
     }
 }
