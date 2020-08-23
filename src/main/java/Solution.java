@@ -1102,4 +1102,102 @@ public boolean isPalindrome(String s) {
 
         return list.toArray(new int[list.size()][]);
     }
+
+    class LRUCache {
+
+        private int capacity;
+
+        private LinkedList<Integer> queue;
+
+        private Map<Integer, Integer> cache;
+
+        public LRUCache(int capacity) {
+            this.capacity = capacity;
+            queue = new LinkedList();
+            cache = new HashMap<Integer, Integer>();
+        }
+
+        public int get(int key) {
+            if(queue.contains(key) == true) {
+                // LRU Update
+                int index = queue.indexOf(key);
+                queue.remove(index);
+                queue.add(key);
+                return cache.get(key);
+            }
+            else {
+                return -1;
+            }
+        }
+
+        public void put(int key, int value) {
+            if(queue.size() < this.capacity) {
+                if(queue.contains(key) == true) {
+                    int index = queue.indexOf(key);
+                    queue.remove(index);
+                }
+                queue.add(key);
+                cache.put(key, value);
+            }
+            else {
+                if(queue.contains(key) == true) {
+                    int index = queue.indexOf(key);
+                    queue.remove(index);
+                }
+                else {
+                    queue.remove(0);
+                }
+                queue.add(key);
+                cache.put(key, value);
+            }
+        }
+    }
+
+    public List<Integer> partitionLabels(String S) {
+
+        // 구간 구하기
+        // T.C = O(26 * n)
+        List<int[]> eleRange = new ArrayList<>();
+        boolean[] isChecked = new boolean[26];
+
+        for(int i = 0; i < S.length(); i++) {
+            char c = S.charAt(i);
+            if(isChecked[c - 'a'] == true) { continue; }
+
+            for(int j = S.length() - 1; j >= i; j--) {
+                if(S.charAt(j) == c) {
+                    int[] range = new int[2];
+                    range[0] = i;
+                    range[1] = j;
+
+                    eleRange.add(range);
+                    break;
+                }
+            }
+            isChecked[c - 'a'] = true;
+        }
+
+        // 정렬할 필요는 없음
+        int[] mergeRange = new int[2];
+        mergeRange[0] = eleRange.get(0)[0];
+        mergeRange[1] = eleRange.get(0)[1];
+
+        List<Integer> answers = new ArrayList<>();
+
+        for(int i = 1; i < eleRange.size(); i++) {
+            if(mergeRange[1] >= eleRange.get(i)[0]) {
+                mergeRange[1] = Math.max(mergeRange[1], eleRange.get(i)[1]);
+            }
+            else {
+                answers.add(mergeRange[1] - mergeRange[0] + 1);
+                mergeRange = new int[2];
+                mergeRange[0] = eleRange.get(i)[0];
+                mergeRange[1] = eleRange.get(i)[1];
+            }
+        }
+
+        answers.add(mergeRange[1] - mergeRange[0] + 1);
+
+        return answers;
+    }
 }
