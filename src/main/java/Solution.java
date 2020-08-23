@@ -1213,4 +1213,34 @@ public boolean isPalindrome(String s) {
         }
         return ans;
     }
+
+    public String minRemoveToMakeValid(String s) {
+
+        StringBuilder sb = new StringBuilder();
+        Deque<Integer> dq = new LinkedList<Integer>();
+
+        for(int i = 0; i < s.length(); i++) {
+            if(s.charAt(i) == '(') {
+                dq.addLast(sb.length());
+                sb.append(s.charAt(i));
+            }
+            else if(s.charAt(i) == ')') {
+                if(dq.isEmpty() == true) {
+                    continue;
+                }
+                sb.append(s.charAt(i));
+                dq.removeLast();
+            }
+            else {
+                sb.append(s.charAt(i));
+            }
+        }
+
+        while(!dq.isEmpty()) {
+            int removeIndex = dq.pollLast();
+            sb = sb.deleteCharAt(removeIndex);
+        }
+
+        return sb.toString();
+    }
 }
