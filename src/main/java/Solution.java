@@ -1243,4 +1243,40 @@ public boolean isPalindrome(String s) {
 
         return sb.toString();
     }
+
+    class Pair2 {
+        String word;
+        int freq;
+        public Pair2(String word, int freq) {
+            this.word = word;
+            this.freq = freq;
+        }
+    }
+
+    public List<String> topKFrequent(String[] words, int k) {
+        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        for(int i = 0; i < words.length; i++) {
+            map.put(words[i], map.getOrDefault(words[i], 0) + 1);
+        }
+
+        PriorityQueue<Pair2> pq = new PriorityQueue(k, new Comparator<Pair2>() {
+            public int compare(Pair2 p1, Pair2 p2) {
+                if(p1.freq == p2.freq) {
+                    return p1.word.compareTo(p2.word);
+                }
+                return Integer.compare(p2.freq, p1.freq);
+            }
+        });
+
+        for(Map.Entry<String, Integer> entry : map.entrySet()) {
+            pq.add(new Pair2(entry.getKey(), entry.getValue()));
+        }
+
+        List<String> rtn = new ArrayList<String>();
+        for(int i = 0; i < k; i++) {
+            rtn.add(pq.poll().word);
+        }
+
+        return rtn;
+    }
 }
