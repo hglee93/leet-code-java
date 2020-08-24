@@ -1279,4 +1279,39 @@ public boolean isPalindrome(String s) {
 
         return rtn;
     }
+
+    class Point {
+        private int dist;
+        private int x;
+        private int y;
+        public Point(int dist, int x, int y) {
+            this.dist = dist;
+            this.x = x;
+            this.y = y;
+        }
+    }
+
+    public int[][] kClosest(int[][] points, int K) {
+
+        PriorityQueue<Point> pq = new PriorityQueue<Point>(new Comparator<Point>() {
+            public int compare(Point p1, Point p2) {
+                return Integer.compare(p1.dist, p2.dist);
+            }
+        });
+
+        for(int i = 0; i < points.length; i++) {
+            int dist = points[i][0] * points[i][0] + points[i][1] * points[i][1];
+            pq.add(new Point(dist, points[i][0], points[i][1]));
+        }
+
+        int[][] rtn = new int[K][2];
+
+        for(int i = 0; i < K; i++) {
+            Point p = pq.poll();
+            rtn[i][0] = p.x;
+            rtn[i][1] = p.y;
+        }
+
+        return rtn;
+    }
 }
