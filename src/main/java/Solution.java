@@ -1324,8 +1324,8 @@ public boolean isPalindrome(String s) {
             }
         }
 
-        private int[] dx = { -1, 1, 0, 0 };
-        private int[] dy = { 0, 0, -1, 1 };
+    private int[] dx = { -1, 1, 0, 0 };
+    private int[] dy = { 0, 0, -1, 1 };
 
         public int numIslands(char[][] grid) {
 
