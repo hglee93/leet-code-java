@@ -1314,4 +1314,56 @@ public boolean isPalindrome(String s) {
 
         return rtn;
     }
+
+    class Point {
+            public int x;
+            public int y;
+            public Point(int x, int y) {
+                this.x = x;
+                this.y = y;
+            }
+        }
+
+        private int[] dx = { -1, 1, 0, 0 };
+        private int[] dy = { 0, 0, -1, 1 };
+
+        public int numIslands(char[][] grid) {
+
+            if(grid.length == 0) { return 0; }
+
+            boolean[][] visited = new boolean[grid.length][grid[0].length];
+            Queue<Point> q = new LinkedList<Point>();
+
+            int height = grid.length;
+            int width = grid[0].length;
+
+            int numberOfIsland = 0;
+
+            for(int x = 0; x < height; x++) {
+                for(int y = 0; y < width; y++) {
+                    if(visited[x][y] == false && grid[x][y] == '1') {
+
+                        q.add(new Point(x, y));
+                        visited[x][y] = true;
+
+                        while(!q.isEmpty()) {
+                            Point p = q.poll();
+                            for(int d = 0; d < 4; d++) {
+                                int nextx = p.x + dx[d];
+                                int nexty = p.y + dy[d];
+                                if(nextx >= 0 && nextx < height && nexty >= 0 && nexty < width
+                                  && visited[nextx][nexty] == false && grid[nextx][nexty] == '1') {
+                                    q.add(new Point(nextx, nexty));
+                                    visited[nextx][nexty] = true;
+                                }
+                            }
+                        }
+
+                        numberOfIsland += 1;
+                    }
+                }
+            }
+
+            return numberOfIsland;
+        }
 }
