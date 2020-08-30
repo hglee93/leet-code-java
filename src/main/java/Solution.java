@@ -1472,4 +1472,57 @@ public boolean isPalindrome(String s) {
 
             return path;
         }
+
+        public int lengthOfLongestSubstring(String s) {
+            /*
+            if(s.length() == 0) { return 0; }
+
+            Map<Character, Integer> map = new HashMap<Character, Integer>();
+
+            int start = 0;
+            int end = 0;
+
+            int max = 0;
+
+            while(end < s.length()) {
+                // 키가 없는 경우는 맵에 문자를 넣어주고
+                // end 변수를 증가 시킨다.
+                if(map.containsKey(s.charAt(end)) == false || map.get(s.charAt(end)) == 0){
+                    map.put(s.charAt(end), 1);
+                    end++;
+                }
+                // 키가 있는 경우라면, 해당 구간의 길이를 구하고
+                // 최대 길이인지 계산한다.
+                // start를 end와 같게 만들어 주고
+                // map을 초기화한다.
+                else {
+                    int interval = end - start;
+                    max = max < interval ? interval : max;
+
+                    map.put(s.charAt(start), 0);
+                    start++;
+                }
+            }
+
+            int interval = end - start;
+            max = max < interval ? interval : max;
+
+            return max;*/
+            int answer = 0;
+            int start = 0, end = 0;
+            int n = s.length();
+
+            Set<Character> set = new HashSet<Character>();
+
+            while(start < n && end < n) {
+                if(set.contains(s.charAt(end)) == false) {
+                    set.add(s.charAt(end++));
+                    answer = Math.max(answer, end - start);
+                }
+                else {
+                    set.remove(s.charAt(start++));
+                }
+            }
+            return answer;
+        }
 }
