@@ -1403,4 +1403,73 @@ public boolean isPalindrome(String s) {
 
             return max;
         }
+
+    public Map<String, List<String>> map = new HashMap();
+
+        public void printMap() {
+            for(Map.Entry<String, List<String>> entry : map.entrySet()) {
+                System.out.println(entry.getKey() + " : " + entry.getValue());
+            }
+        }
+
+        public boolean backtracking(List<String> path, int nTicket, String departure) {
+            if(path.size() - 1 == nTicket) {
+                return true;
+            }
+
+            List<String> arrivalList = map.get(departure);
+            if(arrivalList == null || arrivalList.size() == 0) { return false; }
+
+            for(int i = 0; i < arrivalList.size(); i++) {
+                String next = arrivalList.get(i);
+                path.add(next);
+                arrivalList.remove(i);
+
+                if(backtracking(path, nTicket, next) == true) { return true; }
+
+                path.remove(path.size() - 1);
+                arrivalList.add(i, next);
+            }
+
+            return false;
+        }
+
+        public List<String> findItinerary(List<List<String>> tickets) {
+
+            // 1. Build Map
+            for(List<String> ticket : tickets) {
+
+                String departure = ticket.get(0);
+                String arrival = ticket.get(1);
+
+                List<String> arrivalList;
+
+                if(map.containsKey(departure) == false) {
+                    arrivalList = new ArrayList<String>();
+                }
+                else {
+                    arrivalList = map.get(departure);
+                }
+
+                arrivalList.add(arrival);
+                map.put(departure, arrivalList);
+            }
+
+            // 2. Sorting List in map
+            for(Map.Entry<String, List<String>> entry : map.entrySet()) {
+                Collections.sort(entry.getValue(), new Comparator<String> () {
+                    public int compare(String s1, String s2) {
+                        return s1.compareTo(s2);
+                    }
+                });
+            }
+
+            // 3. Find Path
+            List<String> path = new ArrayList<String>();
+            path.add("JFK");
+
+            backtracking(path, tickets.size(), "JFK");
+
+            return path;
+        }
 }
