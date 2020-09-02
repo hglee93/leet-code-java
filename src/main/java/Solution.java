@@ -1525,4 +1525,42 @@ public boolean isPalindrome(String s) {
             }
             return answer;
         }
+
+    public int minSubArrayLen(int s, int[] nums) {
+
+        if(nums == null || nums.length == 0) { return 0; }
+
+        int minimum = nums.length + 1;
+        int start = 0;
+        int end = 0;
+        int sum = 0;
+        int n = nums.length;
+
+        while(start < n && end < n) {
+            if(sum < s) {
+                sum += nums[end];
+                end++;
+            }
+            else {
+                minimum = Math.min(minimum, end - start);
+                sum -= nums[start];
+                start++;
+            }
+        }
+
+        if(start < n) {
+            while(start < n) {
+                if(sum >= s) {
+                    minimum = Math.min(minimum, end - start);
+                    sum -= nums[start];
+                    start++;
+                }
+                else {
+                    break;
+                }
+            }
+        }
+
+        return minimum == nums.length + 1 ? 0 : minimum;
+    }
 }
