@@ -1,5 +1,8 @@
 import java.util.*;
 
+/**
+ * 튜플
+ */
 class Solution8 {
     public int[] solution(String s) {
 
@@ -50,6 +53,7 @@ class Solution8 {
                 else {
                     hashset.add(ele);
                     answer[i] = ele;
+                    break;
                 }
             }
         }
