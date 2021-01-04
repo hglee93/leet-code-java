@@ -1,3 +1,5 @@
+package kakao;
+
 public class Trie {
 
     // Alphabet size (# of symbols)

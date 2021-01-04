@@ -1,3 +1,5 @@
+package kakao;
+
 /**
  * 다트게임
  */

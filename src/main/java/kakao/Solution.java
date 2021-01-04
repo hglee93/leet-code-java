@@ -1,3 +1,5 @@
+package kakao;
+
 class Solution {
 
     private int minLength = 51;

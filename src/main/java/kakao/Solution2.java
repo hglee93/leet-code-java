@@ -1,3 +1,5 @@
+package kakao;
+
 import java.util.*;
 
 class Solution2 {
