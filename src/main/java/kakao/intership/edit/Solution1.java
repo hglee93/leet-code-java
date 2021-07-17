@@ -19,44 +19,9 @@ class Solution {
 
     private Set<Integer> deleteSet = new HashSet<>();
     private Stack<Element> deleteStack = new Stack<>();
-    private List<Integer> spreadsheet = new LinkedList<>();
-
-    class DeleteElement {
-        int index;
-        Element node;
-    }
-
-    public void print(Element head) {
-
-        Element cursor = head;
-
-        while(cursor != null) {
-            System.out.print("(" + cursor.data + ") ");
-            cursor = cursor.next;
-        }
-
-        System.out.println("");
-
-        cursor = head;
-
-        while(cursor != null) {
-            System.out.println("(" + cursor.data + ") ");
-
-            if(cursor.prev != null){
-                System.out.println("cursor.prev : " + "(" + cursor.prev.data + ") ");
-            }
-            if(cursor.next != null){
-                System.out.println("cursor.next : " + "(" + cursor.next.data + ") ");
-            }
-            cursor = cursor.next;
-        }
-
-        System.out.println("");
-    }
 
     public String solution(int n, int k, String[] cmd) {
 
-        // O(n)
         Element head = new Element(-1, null, null);
         Element tail = head;
         Element cursor = null;
@@ -69,44 +34,41 @@ class Solution {
         }
 
         for(String command : cmd) {
-
-            String[] temp = command.split(" ");
-            String action = temp[0];
-            int move = temp.length >= 2 ? Integer.parseInt(temp[1]) : 0;
+            char action = command.charAt(0);
+            int move = 0;
 
             switch(action) {
-                case "U":
+                case 'U':
+                    move = Integer.parseInt(command.substring(2));
                     cursor = moveToUp(move, cursor);
                     break;
-                case "D":
+
+                case 'D':
+                    move = Integer.parseInt(command.substring(2));
                     cursor = moveToDown(move, cursor);
                     break;
-                case "C":
+
+                case 'C':
                     deleteStack.push(cursor);
-                    // O(1)
                     deleteSet.add(cursor.data);
-                    // O(1)
                     cursor = deleteNode(cursor);
                     break;
 
-                case "Z": // 복구
-                    //O(1)
+                case 'Z': // 복구
                     Element restoreNode = deleteStack.pop();
                     insertNode(restoreNode.prev, restoreNode);
-                    //O(1)
                     deleteSet.remove(restoreNode.data);
                     break;
             }
-            //System.out.println("cursor : " + "(" + cursor.data + ")");
-            //print(head.next);
         }
 
         StringBuilder builder = new StringBuilder();
         for(int i = 0; i < n; i++) {
-            if(deleteSet.contains(i)) { builder.append("X"); }
-            else {
-                builder.append("O");
+            if(deleteSet.contains(i)) {
+                builder.append("X");
+                continue;
             }
+            builder.append("O");
         }
 
         return builder.toString();
@@ -116,7 +78,6 @@ class Solution {
         public int data;
         public Element prev;
         public Element next;
-
         public Element(int data, Element prev, Element next) {
             this.data = data;
             this.prev = null;
@@ -138,7 +99,6 @@ class Solution {
             curNode.next.prev = curNode.prev;
         }
         curNode.prev.next = curNode.next;
-
         return curNode.next == null ? curNode.prev : curNode.next;
     }
 
