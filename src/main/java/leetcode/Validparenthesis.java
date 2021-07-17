@@ -7,6 +7,7 @@ public class Validparenthesis {
         // Open bracket은 스택에 삽입하고
         // Closed bracket일 경우 스택의 top을 확인한다.
         // 왜 스택을 사용하는가?
+        /*
         Stack<Character> stack = new Stack<>();
         for(char c : s.toCharArray()) {
 
@@ -38,6 +39,7 @@ public class Validparenthesis {
             return false;
         }
 
+        return true;*/
         return true;
     }
 }
