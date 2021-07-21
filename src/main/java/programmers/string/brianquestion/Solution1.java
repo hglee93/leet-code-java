@@ -2,20 +2,6 @@ package programmers.string.brianquestion;
 
 public class Solution1 {
     public static void main(String[] args) {
-        Solution solution = new Solution();
-
-        String[] examples = {
-                "HaEaLaLaObWORLDbSpIpGpOpNpGJqOqAdGcWcFcDdeGfWfLeoBBoAAAAxAxAxAA",
-                "aBcAadDeEdvAvlElmEEEEm", "AcAcABaBaB", "aGbWbFbDakGnWnLk", "XcXbXcX",
-                "aCaCa", "AxAxAxAoBoBoB", "xAaAbAaAx", "AsCsWsQsQsEEEEEEEEeEeEe", "ABCaDaEFGbH", "aAaBBBcAeAeAc",
-                "ABCbDaEaFbHI", "AacacaA", "AaBcBcBcBcB", "aAAA", "AAAa", "aAbBBbAa", "aAbBBbAa", "aAAbBbAAa", "aAcAbAbAcAcAcAa",
-                "acAcAcAa", "aAcAcAca", "AdAeAeAdA", "dAAeAd", "dAeAAd"
-        };
-
-        for(String example : examples) {
-            System.out.print(solution.solution(example));
-            System.out.println(" : " + example);
-        }
     }
 }
 
@@ -121,8 +107,6 @@ class Solution {
                     } else {
                         return "invalid";
                     }
-
-                    /**/
                 }
                 else if(capitalCount == 1){
                     String buffer = sentence.substring(cursor, firstIndex);
