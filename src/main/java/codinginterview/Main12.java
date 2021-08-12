@@ -1,8 +1,5 @@
 package codinginterview;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import java.util.Arrays;
 
 public class Main12 {
@@ -44,16 +41,7 @@ public class Main12 {
 
         return true;
     }
-
-    @Test
     public static void main(String[] args) {
         Main12 main12 = new Main12();
-        Assertions.assertEquals(true, main12.permutation("god", "dog"));
-        Assertions.assertEquals(false, main12.permutation("god", "dogg"));
-        Assertions.assertEquals(true, main12.permutation("", ""));
-
-        Assertions.assertEquals(true, main12.permutation2("god", "dog"));
-        Assertions.assertEquals(false, main12.permutation2("god", "dogg"));
-        Assertions.assertEquals(true, main12.permutation2("", ""));
     }
 }
